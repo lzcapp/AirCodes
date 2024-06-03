@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AirportCodes.Properties;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace AirportCodes {
@@ -78,9 +80,12 @@ namespace AirportCodes {
         }
 
         private static List<Dictionary<string, string>> GetCityCode(string code) {
-            var ds = new DataSet();
-            ds.ReadXml(AppDomain.CurrentDomain.BaseDirectory + "\\airports.xml");
-            ds.CaseSensitive = false;
+            var ds = new DataSet {
+                CaseSensitive = false
+            };
+            using (var stringReader = new StringReader(Resources.airports)) {
+                ds.ReadXml(stringReader);
+            };
             DataTable table = ds.Tables[0];
             DataView dvw = table.DefaultView;
             var result = new List<Dictionary<string, string>>();
