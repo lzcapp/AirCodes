@@ -19,7 +19,7 @@ namespace AirportCodes {
                     Console.Clear();
                     continue;
                 }
-                
+
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
@@ -32,7 +32,6 @@ namespace AirportCodes {
                 stopwatch.Stop();
 
                 if (result.Count > 0) {
-                    
                     foreach (var t in result) {
                         Console.WriteLine();
 
@@ -111,11 +110,15 @@ namespace AirportCodes {
             var result = new List<Dictionary<string, string>>();
             if (dvw.Count != 0) {
                 result.AddRange(from DataRowView record in dvw
-                    select new Dictionary<string, string> {
-                        { "IATA", CTrim(record["ThreeCode"]) }, 
-                        { "ICAO", CTrim(record["FourCode"]) }, 
-                        { "Airport", CTrim(record["AirportName"]) }
-                    });
+                                select new Dictionary<string, string> {
+                                    {
+                                        "IATA", CTrim(record["ThreeCode"])
+                                    }, {
+                                        "ICAO", CTrim(record["FourCode"])
+                                    }, {
+                                        "Airport", CTrim(record["AirportName"])
+                                    }
+                                });
             }
             return result;
         }
