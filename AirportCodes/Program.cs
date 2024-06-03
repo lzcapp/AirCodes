@@ -4,7 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 
-namespace TEST {
+namespace AirportCodes {
     internal static class Program {
         static void Main() {
             string code;
@@ -97,7 +97,7 @@ namespace TEST {
                     break;
                 }
             }
-            dvw.RowFilter = "AirportName LIKE '%" + code + "%'";
+            dvw.RowFilter = "AirportName LIKE '% " + code + " %' OR AirportName LIKE '" + code + " %' OR AirportName LIKE '% " + code + "'";
             result.AddRange(GetCityCode(dvw));
             return result;
         }

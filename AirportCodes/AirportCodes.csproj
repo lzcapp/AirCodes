@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E4E01347-47B9-4446-9B12-3E4E072574A7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TEST</RootNamespace>
-    <AssemblyName>TEST</AssemblyName>
+    <RootNamespace>AirportCodes</RootNamespace>
+    <AssemblyName>Airport Codes</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TEST.Program</StartupObject>
+    <StartupObject>AirportCodes.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
