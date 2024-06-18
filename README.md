@@ -1,4 +1,4 @@
-# AirportCodes
+# AirCodes
 
 ![GitHub Release](https://img.shields.io/github/v/release/lzcapp/AirportCodes?style=for-the-badge)
 
