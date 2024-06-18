@@ -61,14 +61,42 @@ namespace AirportCodes.Properties {
         }
         
         /// <summary>
-        ///   查找类似 &lt;DataTable&gt;
-        ///  &lt;CityCode FourCode=&quot;HEAR&quot; AirportName=&quot;El Arish Intl Airport&quot; ThreeCode=&quot;AAC&quot; /&gt;
-        ///  &lt;CityCode FourCode=&quot;DABB&quot; AirportName=&quot;Annaba - El Mellah Airport&quot; ThreeCode=&quot;AAE&quot; /&gt;
-        ///  &lt;CityCode FourCode=&quot;EKYT&quot; AirportName=&quot;Aalborg Airport&quot; ThreeCode=&quot;AAL&quot; /&gt;
-        ///  &lt;CityCode FourCode=&quot;FAMD&quot; AirportName=&quot;Malamala&quot; ThreeCode=&quot;AAM&quot; /&gt;
-        ///  &lt;CityCode FourCode=&quot;OMAL&quot; AirportName=&quot;Al Ain Intl&quot; ThreeCode=&quot;AAN&quot; /&gt;
-        ///  &lt;CityCode FourCode=&quot;SVAN&quot; AirportName=&quot;Anaco&quot; ThreeCode=&quot;AAO&quot; /&gt;
-        ///  &lt;CityCode FourCode=&quot;URKA&quot; Airport [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///   查找类似 IATA,ICAO,Airline,Callsign,Country
+        ///M3,TUS,ABSA Cargo Airline,ABSA Cargo,Brazil
+        ///GB,ABX,ABX Air,ABEX,USA
+        ///9T,RUN,ACT Airlines,CARGO TURK,Turkey
+        ///9N,AJV,ANA &amp; JP Express,AYJAY CARGO,Japan
+        ///V8,VAS,ATRAN Cargo Airlines,ATRAN,Russia
+        ///2E,PHW,AVE.com,PHOENIX SHARJAH,United Arab Emirates
+        ///K5,ABE,Aban Air,ABAN,Iran
+        ///W9,AAB,Abelag Aviation,ABG,Belgium
+        ///MO,AUH,Abu Dhabi Amiri Flight,SULTAN,United Arab Emirates
+        ///ZY,ADE,Ada Air,ADA AIR,Albania
+        ///JP,ADR,Adria Airways,ADRIA,Slovenia
+        ///A3,AEE,Aegean Airlines,AEGEAN,Greece
+        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string airlines {
+            get {
+                return ResourceManager.GetString("airlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 IATA,ICAO,Location,Airport,Country
+        ///BIM,OABN,Bamyan,Bamyan,Afghanistan
+        ///BST,OABT,Bost,Bost,Afghanistan
+        ///BPM,OAIX,Charikar,Bagram Air Base,Afghanistan
+        ///CCN,OACC,Charkhcharan,Charkhcharan,Afghanistan
+        ///FBD,OAFZ,Faizabad,Faizabad,Afghanistan
+        ///FAH,OAFR,Farah,Farah,Afghanistan
+        ///GRG,OAGZ,Gardez,Gardez,Afghanistan
+        ///HEA,OAHR,Herat,Herat,Afghanistan
+        ///JAA,OAJL,Jalalabad,Jalalabad,Afghanistan
+        ///KBL,OAKB,Kabul,Kabul Intl,Afghanistan
+        ///KDH,OAKN,Kandahar,Kandahar Intl,Afghanistan
+        ///KHT,OAKS,Khost,Khost,Afghanistan
+        ///KWH,OAHN, [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string airports {
             get {
