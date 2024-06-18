@@ -1,13 +1,10 @@
-﻿using AirportCodes.Properties;
-using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace AirportCodes {
     internal abstract class Program {
@@ -20,8 +17,8 @@ namespace AirportCodes {
             do {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write(">> ");
-                code = Console.ReadLine();
-                if (code == null || code.Equals("exit", StringComparison.OrdinalIgnoreCase) || code.Equals("quit", StringComparison.OrdinalIgnoreCase)) {
+                code = Console.ReadLine() ?? string.Empty;
+                if (code.Equals("exit", StringComparison.OrdinalIgnoreCase) || code.Equals("quit", StringComparison.OrdinalIgnoreCase)) {
                     continue;
                 }
 
@@ -76,7 +73,7 @@ namespace AirportCodes {
                         Console.Write(t.Callsign);
 
                         Console.WriteLine();
-                        
+
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(@"@");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -111,7 +108,7 @@ namespace AirportCodes {
                         Console.Write(t.ICAO);
 
                         Console.WriteLine();
-                        
+
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Write(@"@");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -145,20 +142,30 @@ namespace AirportCodes {
             } while (code != null && !code.Equals("exit", StringComparison.OrdinalIgnoreCase));
         }
 
-        private static object LoadAirports() {
-            using (var sReader = new StringReader(Resources.airports)) {
-                using (var csvReader = new CsvReader(sReader, CultureInfo.InvariantCulture)) {
-                    return csvReader.GetRecords<Airports>().ToList();
-                }
+        private static List<Airports> LoadAirports() {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = assembly.GetName().Name + ".Resources.airports.csv";
+            using Stream? stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream != null) {
+                using var reader = new StreamReader(stream);
+                using var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+                var records = csvReader.GetRecords<Airports>().ToList();
+                return records;
             }
+            return new List<Airports>();
         }
 
-        private static object LoadAirlines() {
-            using (var sReader = new StringReader(Resources.airlines)) {
-                using (var csvReader = new CsvReader(sReader, CultureInfo.InvariantCulture)) {
-                    return csvReader.GetRecords<Airlines>().ToList();
-                }
+        private static List<Airlines> LoadAirlines() {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = assembly.GetName().Name + ".Resources.airlines.csv";
+            using Stream? stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream != null) {
+                using var reader = new StreamReader(stream);
+                using var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+                var records = csvReader.GetRecords<Airlines>().ToList();
+                return records;
             }
+            return new List<Airlines>();
         }
 
         private static List<Airlines> GetAirlines(List<Airlines> airlines, string code) {
