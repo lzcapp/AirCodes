@@ -1,27 +1,34 @@
 ﻿using System.Diagnostics;
+using System.Formats.Asn1;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using CsvHelper;
 using CsvHelper.Configuration;
 
-namespace AirCodes {
-    internal abstract class Program {
-        private static void Main() {
+namespace AirCodes
+{
+    internal abstract class Program
+    {
+        private static void Main()
+        {
             string code;
 
             var airlines = LoadAirlines();
             var airports = LoadAirports();
 
-            do {
+            do
+            {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write(">> ");
                 code = Console.ReadLine() ?? string.Empty;
-                if (code.Equals("exit", StringComparison.OrdinalIgnoreCase) || code.Equals("quit", StringComparison.OrdinalIgnoreCase)) {
+                if (code.Equals("exit", StringComparison.OrdinalIgnoreCase) || code.Equals("quit", StringComparison.OrdinalIgnoreCase))
+                {
                     continue;
                 }
 
-                if (code.Equals("clear", StringComparison.OrdinalIgnoreCase) || code.Equals("cls", StringComparison.OrdinalIgnoreCase)) {
+                if (code.Equals("clear", StringComparison.OrdinalIgnoreCase) || code.Equals("cls", StringComparison.OrdinalIgnoreCase))
+                {
                     Console.Clear();
                     continue;
                 }
@@ -32,18 +39,21 @@ namespace AirCodes {
                 var resultAirlines = new List<Airlines>();
                 var resultAirports = new List<Airports>();
 
-                if (!string.IsNullOrWhiteSpace(code) && !"Airport".ToUpperInvariant().Contains(code.ToUpperInvariant()) && !"Intl".ToUpperInvariant().Contains(code.ToUpperInvariant())) {
+                if (!string.IsNullOrWhiteSpace(code) && !"Airport".ToUpperInvariant().Contains(code.ToUpperInvariant()) && !"Intl".ToUpperInvariant().Contains(code.ToUpperInvariant()))
+                {
                     resultAirlines = GetAirlines(airlines, code);
                     resultAirports = GetAirports(airports, code);
                 }
 
                 stopwatch.Stop();
 
-                if (resultAirlines.Count > 0) {
+                if (resultAirlines.Count > 0)
+                {
                     Console.WriteLine();
                     Console.WriteLine(resultAirlines.Count == 1 ? "1 Airline: " : resultAirlines.Count + " Airlines: ");
 
-                    foreach (Airlines t in resultAirlines) {
+                    foreach (Airlines t in resultAirlines)
+                    {
                         Console.WriteLine();
 
                         Console.ForegroundColor = ConsoleColor.White;
@@ -82,11 +92,13 @@ namespace AirCodes {
                     }
                 }
 
-                if (resultAirports.Count > 0) {
+                if (resultAirports.Count > 0)
+                {
                     Console.WriteLine();
                     Console.WriteLine(resultAirports.Count == 1 ? "1 Airport: " : resultAirports.Count + " Airports: ");
 
-                    foreach (Airports t in resultAirports) {
+                    foreach (Airports t in resultAirports)
+                    {
                         Console.WriteLine();
 
                         Console.ForegroundColor = ConsoleColor.White;
@@ -121,7 +133,8 @@ namespace AirCodes {
                     }
                 }
 
-                if (resultAirlines.Count > 0 || resultAirports.Count > 0) {
+                if (resultAirlines.Count > 0 || resultAirports.Count > 0)
+                {
                     var elapsed = stopwatch.ElapsedMilliseconds;
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine();
@@ -133,7 +146,8 @@ namespace AirCodes {
                     Console.ResetColor();
                 }
 
-                if (resultAirlines.Count == 0 && resultAirports.Count == 0) {
+                if (resultAirlines.Count == 0 && resultAirports.Count == 0)
+                {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine();
                     Console.WriteLine("NO RESULT");
@@ -144,11 +158,13 @@ namespace AirCodes {
             } while (!code.Equals("exit", StringComparison.OrdinalIgnoreCase));
         }
 
-        private static List<Airports> LoadAirports() {
+        private static List<Airports> LoadAirports()
+        {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = assembly.GetName().Name + ".Resources.airports.csv";
             using Stream? stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream != null) {
+            if (stream != null)
+            {
                 using var reader = new StreamReader(stream);
                 using var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
                 var records = csvReader.GetRecords<Airports>().ToList();
@@ -157,11 +173,13 @@ namespace AirCodes {
             return new List<Airports>();
         }
 
-        private static List<Airlines> LoadAirlines() {
+        private static List<Airlines> LoadAirlines()
+        {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = assembly.GetName().Name + ".Resources.airlines.csv";
             using Stream? stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream != null) {
+            if (stream != null)
+            {
                 using var reader = new StreamReader(stream);
                 using var csvReader = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
                 var records = csvReader.GetRecords<Airlines>().ToList();
@@ -170,42 +188,53 @@ namespace AirCodes {
             return new List<Airlines>();
         }
 
-        private static List<Airlines> GetAirlines(List<Airlines> airlines, string code) {
+        private static List<Airlines> GetAirlines(List<Airlines> airlines, string code)
+        {
             var result = new List<Airlines>();
-            foreach (Airlines airline in airlines) {
+            foreach (Airlines airline in airlines)
+            {
                 var pattern = @"\b" + code + @"\b";
                 MatchCollection matches = Regex.Matches(airline.Airline, pattern, RegexOptions.IgnoreCase);
-                if (matches.Count > 0) {
+                if (matches.Count > 0)
+                {
                     result.Add(airline);
                 }
                 MatchCollection matchesCountry = Regex.Matches(airline.Country, pattern, RegexOptions.IgnoreCase);
-                if (matchesCountry.Count > 0) {
+                if (matchesCountry.Count > 0)
+                {
                     result.Add(airline);
                 }
-                if (airline.IATA.Equals(code, StringComparison.OrdinalIgnoreCase) || airline.ICAO.Equals(code, StringComparison.OrdinalIgnoreCase) || airline.Callsign.Equals(code, StringComparison.OrdinalIgnoreCase)) {
+                if (airline.IATA.Equals(code, StringComparison.OrdinalIgnoreCase) || airline.ICAO.Equals(code, StringComparison.OrdinalIgnoreCase) || airline.Callsign.Equals(code, StringComparison.OrdinalIgnoreCase))
+                {
                     result.Add(airline);
                 }
             }
             return result.Distinct().ToList();
         }
 
-        private static List<Airports> GetAirports(List<Airports> airports, string code) {
+        private static List<Airports> GetAirports(List<Airports> airports, string code)
+        {
             var result = new List<Airports>();
-            foreach (Airports airport in airports) {
+            foreach (Airports airport in airports)
+            {
                 var pattern = @"\b" + code + @"\b";
                 MatchCollection matchesAirport = Regex.Matches(airport.Airport, pattern, RegexOptions.IgnoreCase);
-                if (matchesAirport.Count > 0) {
+                if (matchesAirport.Count > 0)
+                {
                     result.Add(airport);
                 }
                 MatchCollection matchesLocation = Regex.Matches(airport.Location, pattern, RegexOptions.IgnoreCase);
-                if (matchesLocation.Count > 0) {
+                if (matchesLocation.Count > 0)
+                {
                     result.Add(airport);
                 }
                 MatchCollection matchesCountry = Regex.Matches(airport.Country, pattern, RegexOptions.IgnoreCase);
-                if (matchesCountry.Count > 0) {
+                if (matchesCountry.Count > 0)
+                {
                     result.Add(airport);
                 }
-                if (airport.IATA.Equals(code, StringComparison.OrdinalIgnoreCase) || airport.ICAO.Equals(code, StringComparison.OrdinalIgnoreCase)) {
+                if (airport.IATA.Equals(code, StringComparison.OrdinalIgnoreCase) || airport.ICAO.Equals(code, StringComparison.OrdinalIgnoreCase))
+                {
                     result.Add(airport);
                 }
             }
@@ -213,19 +242,21 @@ namespace AirCodes {
         }
     }
 
-    internal class Airlines {
-        public string IATA { get; }
-        public string ICAO { get; }
-        public string Airline { get; }
-        public string Callsign { get; }
-        public string Country { get; }
+    internal class Airlines
+    {
+        public string IATA { get; set; }
+        public string ICAO { get; set; }
+        public string Airline { get; set; }
+        public string Callsign { get; set; }
+        public string Country { get; set; }
     }
 
-    internal class Airports {
-        public string IATA { get; }
-        public string ICAO { get; }
-        public string Location { get; }
-        public string Airport { get; }
-        public string Country { get; }
+    internal class Airports
+    {
+        public string IATA { get; set; }
+        public string ICAO { get; set; }
+        public string Location { get; set; }
+        public string Airport { get; set; }
+        public string Country { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.10.34928.147
+VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AirCodes", "AirCodes\AirCodes.csproj", "{27708178-B3EF-4C72-8A91-1AFD685974D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirCodes", "AirCodes\AirCodes.csproj", "{737B4836-1644-4B83-AF78-6F2658FCF427}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{27708178-B3EF-4C72-8A91-1AFD685974D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27708178-B3EF-4C72-8A91-1AFD685974D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27708178-B3EF-4C72-8A91-1AFD685974D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27708178-B3EF-4C72-8A91-1AFD685974D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{737B4836-1644-4B83-AF78-6F2658FCF427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{737B4836-1644-4B83-AF78-6F2658FCF427}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{737B4836-1644-4B83-AF78-6F2658FCF427}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{737B4836-1644-4B83-AF78-6F2658FCF427}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CD12A9D9-192C-4B4E-90DC-E9CBC62E89B9}
+		SolutionGuid = {FC54F6F8-948F-410D-AF88-43A318ACEFE2}
 	EndGlobalSection
 EndGlobal
