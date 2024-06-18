@@ -1,18 +1,17 @@
-﻿using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using CsvHelper;
 using CsvHelper.Configuration;
 
-namespace AirportCodes {
+namespace AirCodes {
     internal abstract class Program {
         private static void Main() {
             string code;
 
-            var airlines = LoadAirlines() as List<Airlines>;
-            var airports = LoadAirports() as List<Airports>;
+            var airlines = LoadAirlines();
+            var airports = LoadAirports();
 
             do {
                 Console.ForegroundColor = ConsoleColor.White;
@@ -75,7 +74,7 @@ namespace AirportCodes {
                         Console.WriteLine();
 
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(@"@");
+                        Console.Write("@");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(t.Country);
 
@@ -110,11 +109,11 @@ namespace AirportCodes {
                         Console.WriteLine();
 
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(@"@");
+                        Console.Write("@");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(t.Location);
                         Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.Write(@", ");
+                        Console.Write(", ");
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.Write(t.Country);
 
@@ -135,11 +134,14 @@ namespace AirportCodes {
                 }
 
                 if (resultAirlines.Count == 0 && resultAirports.Count == 0) {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine();
                     Console.WriteLine("NO RESULT");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
                 Console.WriteLine();
-            } while (code != null && !code.Equals("exit", StringComparison.OrdinalIgnoreCase));
+            } while (!code.Equals("exit", StringComparison.OrdinalIgnoreCase));
         }
 
         private static List<Airports> LoadAirports() {
@@ -209,43 +211,21 @@ namespace AirportCodes {
             }
             return result.Distinct().ToList();
         }
-
-        private static string CTrim(object inputs) {
-            inputs = inputs ?? string.Empty;
-            return inputs == DBNull.Value ? string.Empty : inputs.ToString().Trim();
-        }
-
-        private static List<Dictionary<string, string>> GetCityCode(DataView dvw) {
-            var result = new List<Dictionary<string, string>>();
-            if (dvw.Count != 0) {
-                result.AddRange(from DataRowView record in dvw
-                                select new Dictionary<string, string> {
-                                    {
-                                        "IATA", CTrim(record["ThreeCode"])
-                                    }, {
-                                        "ICAO", CTrim(record["FourCode"])
-                                    }, {
-                                        "Airport", CTrim(record["AirportName"])
-                                    }
-                                });
-            }
-            return result;
-        }
     }
 
     internal class Airlines {
-        public string IATA { get; set; }
-        public string ICAO { get; set; }
-        public string Airline { get; set; }
-        public string Callsign { get; set; }
-        public string Country { get; set; }
+        public string IATA { get; }
+        public string ICAO { get; }
+        public string Airline { get; }
+        public string Callsign { get; }
+        public string Country { get; }
     }
 
     internal class Airports {
-        public string IATA { get; set; }
-        public string ICAO { get; set; }
-        public string Location { get; set; }
-        public string Airport { get; set; }
-        public string Country { get; set; }
+        public string IATA { get; }
+        public string ICAO { get; }
+        public string Location { get; }
+        public string Airport { get; }
+        public string Country { get; }
     }
 }
