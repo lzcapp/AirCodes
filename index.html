@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AirCodes</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-wrapper {
+            background-color: #2196F3;
+        }
+
+        .brand-logo {
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .btn {
+            margin-top: 10px;
+        }
+
+        .input-field {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSV Data Query</h1>
+    <div>
+        <input type="text" id="searchInput" placeholder="Enter search term">
+        <button onclick="searchData()">Search</button>
+    </div>
+
+    <div id="csvData"></div>
+
+    <script>
+        let csvData = [];
+
+        loadCSV()
+
+        function loadCSV() {
+            fetch('Data/airlines.csv')
+                .then(response => response.text())
+                .then(data => {
+                    csvData = data.split('\n').map(row => row.split(','));
+                });
+            displayData(csvData)
+        }
+
+        function displayData(data) {
+            const table = document.createElement('table');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+
+            document.getElementById('csvData').innerHTML = '';
+            document.getElementById('csvData').appendChild(table);
+        }
+
+        function searchData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            let searchData = [];
+            for (const array of csvData) {
+                console.log(array.toString().toLowerCase())
+                if (array.toString().toLowerCase().indexOf(searchTerm) !== -1) {
+                    searchData.push(array)
+                }
+            }
+            displayData(searchData);
+        }
+    </script>
+</body>
+</html>
